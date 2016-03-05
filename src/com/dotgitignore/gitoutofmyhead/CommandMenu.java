@@ -16,9 +16,11 @@
  */
 package com.dotgitignore.gitoutofmyhead;
 
+import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.JDialog;
 import javax.swing.JList;
+import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
 /**
@@ -34,10 +36,11 @@ public class CommandMenu extends JDialog implements Gestures {
         setTitle("Git Command Menu");
         list = new JList<>(new String[]{"Add", "Commit", "Checkout"});
         list.setFixedCellHeight(50);
-        list.setFixedCellWidth(250);
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         list.setSelectedIndex(0);
-        add(list);
+        JScrollPane pane = new JScrollPane(list);
+        pane.setPreferredSize(new Dimension(250, 250));
+        add(pane);
         pack();
         setLocation((int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() - getWidth()) / 2, (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() - getHeight()) / 2);
         setVisible(true);
@@ -53,7 +56,7 @@ public class CommandMenu extends JDialog implements Gestures {
     }
 
     public void singleJawClench() {
-
+        
     }
 
     public void doubleJawClench() {
