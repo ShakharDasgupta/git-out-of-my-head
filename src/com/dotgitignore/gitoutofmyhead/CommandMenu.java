@@ -16,15 +16,53 @@
  */
 package com.dotgitignore.gitoutofmyhead;
 
-import javax.swing.JFrame;
+import java.awt.Toolkit;
+import javax.swing.JDialog;
+import javax.swing.JList;
+import javax.swing.ListSelectionModel;
 
 /**
  *
  * @author Shakhar Dasgupta<sdasgupt@oswego.edu>
  */
-public class CommandMenu extends JFrame {
-    
+public class CommandMenu extends JDialog implements Gestures {
+
+    private final JList<String> list;
+    private boolean visible;
+
     public CommandMenu() {
         setTitle("Git Command Menu");
+        list = new JList<>(new String[]{"Add", "Commit", "Checkout"});
+        list.setFixedCellHeight(50);
+        list.setFixedCellWidth(250);
+        list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        list.setSelectedIndex(0);
+        add(list);
+        pack();
+        setLocation((int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() - getWidth()) / 2, (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() - getHeight()) / 2);
+        setVisible(true);
+        visible = true;
+    }
+
+    public void headDown() {
+        list.setSelectedIndex((list.getSelectedIndex() + 1) % list.getModel().getSize());
+    }
+
+    public void headUp() {
+        list.setSelectedIndex((list.getModel().getSize() + list.getSelectedIndex() - 1) % list.getModel().getSize());
+    }
+
+    public void singleJawClench() {
+
+    }
+
+    public void doubleJawClench() {
+        if (visible) {
+            visible = false;
+            setVisible(false);
+        } else {
+            visible = true;
+            setVisible(true);
+        }
     }
 }
