@@ -48,7 +48,7 @@ public class DataAnalyzer {
         this.bufferSize = b;
         this.dataBuffer = new Double[this.streams][b];
         this.nextCol = 0;
-        this.museServer = new MuseServer(p);
+        this.museServer = new MuseServer(this, p);
     }
 
     /**
