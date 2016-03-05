@@ -27,7 +27,8 @@ public class Main {
      */
     public static void main(String[] args) {
         int port = 5000;
-        MuseServer server = new MuseServer(port);
+        int bufferSize = 5;
+        DataAnalyzer da = new DataAnalyzer(bufferSize, port);
     }
 
 }
