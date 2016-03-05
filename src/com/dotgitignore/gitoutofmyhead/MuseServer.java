@@ -27,14 +27,17 @@ public class MuseServer {
 
     private final int port;
     private final OscP5 oscP5Server;
+    private final DataAnalyzer dataAnalyzer;
 
     /**
      * Instantiates a <code>MuseServer</code> object with the given port.
      *
+     * @param da The DataAnalyzer of the MuseServer.
      * @param p The port number of the MuseServer.
      */
-    public MuseServer(int p) {
+    public MuseServer(DataAnalyzer da, int p) {
         this.port = p;
+        this.dataAnalyzer = da;
         this.oscP5Server = new OscP5(this, p);
     }
 
@@ -45,7 +48,11 @@ public class MuseServer {
      */
     public void oscEvent(OscMessage msg) {
         if (msg.checkAddress("/muse/elements/jaw_clench")) {
-            System.out.println("Jaw Clench: " + msg.get(0).intValue());
+            this.dataAnalyzer.addData(3, (double) msg.get(0).intValue());
+        } else if (msg.checkAddress("/muse/elements/acc")) {
+            for (int i = 0; i <= 3; i++) {
+                this.dataAnalyzer.addData(i, msg.get(i).doubleValue());
+            }
         }
     }
 }
