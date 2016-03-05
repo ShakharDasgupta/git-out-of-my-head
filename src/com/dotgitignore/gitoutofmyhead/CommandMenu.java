@@ -18,6 +18,7 @@ package com.dotgitignore.gitoutofmyhead;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import javax.swing.DefaultListModel;
 import javax.swing.JDialog;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
@@ -34,7 +35,11 @@ public class CommandMenu extends JDialog implements Gestures {
 
     public CommandMenu() {
         setTitle("Git Command Menu");
-        list = new JList<>(new String[]{"Add", "Commit", "Checkout"});
+        DefaultListModel<String> model = new DefaultListModel<>();
+        model.addElement("Add");
+        model.addElement("Commit");
+        model.addElement("Checkout");
+        list = new JList<>(model);
         list.setFixedCellHeight(50);
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         list.setSelectedIndex(0);
