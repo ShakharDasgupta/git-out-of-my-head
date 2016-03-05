@@ -28,7 +28,7 @@ public class DataAnalyzer {
     private final Double[][] dataBuffer;
     private final int bufferSize;
     private final int streams;
-    private int nextCol;
+    private final int[] nextCol;
 
     private double baseThreshold;
     private double highThreshold;
@@ -47,7 +47,7 @@ public class DataAnalyzer {
         this.streams = 4;
         this.bufferSize = b;
         this.dataBuffer = new Double[this.streams][b];
-        this.nextCol = 0;
+        this.nextCol = new int[this.streams];
         this.museServer = new MuseServer(this, p);
     }
 
@@ -58,11 +58,18 @@ public class DataAnalyzer {
      * @param d The data measurement to be added.
      */
     public void addData(int i, double d) {
-        this.dataBuffer[i][this.nextCol] = d;
-        this.nextCol++;
+        this.dataBuffer[i][this.nextCol[i]] = d;
+        this.nextCol[i]++;
 
         // Checks if the buffer is full, if so then analyze the data
-        if (this.nextCol == this.bufferSize) {
+        int filled = 0;
+        for (int j = 0; j < this.streams; j++) {
+            if (this.nextCol[j] == this.bufferSize) {
+                filled++;
+            }
+        }
+
+        if (filled == this.streams) {
             this.analyzeData();
         }
     }
@@ -160,7 +167,7 @@ public class DataAnalyzer {
             System.out.println("HEAD UP");
             return "Head Up";
         }
-        
+
         // Check for headDown
         if (acc0Avg < this.lowThreshold) {
             // HEAD DOWN
@@ -182,7 +189,9 @@ public class DataAnalyzer {
             }
         }
 
-        this.nextCol = 0;
+        for (int i = 0; i < this.streams; i++) {
+            this.nextCol[i] = 0;
+        }
     }
 
 }
