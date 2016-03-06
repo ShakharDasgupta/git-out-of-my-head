@@ -35,7 +35,7 @@ public class JawClenchMonitor implements Runnable {
     }
     
     public void run() {
-        dataAnalyzer.monitoringJawClench = true;
+        dataAnalyzer.monitoring = true;
         try {
             t.sleep(this.waitTime);
         } catch (InterruptedException ex) {
@@ -47,7 +47,7 @@ public class JawClenchMonitor implements Runnable {
             dataAnalyzer.controller.singleJawClench();
         }
         dataAnalyzer.jawClenchCount = 0;
-        dataAnalyzer.monitoringJawClench = false;
+        dataAnalyzer.monitoring = false;
     }
     
     public void start() {

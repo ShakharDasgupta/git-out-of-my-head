@@ -31,8 +31,7 @@ public class DataAnalyzer {
     int blinkCount;
     int jawClenchCount;
 
-    boolean monitoringBlink;
-    boolean monitoringJawClench;
+    boolean monitoring;
 
     /**
      * Initializes a <code>DataAnalyzer</code> with the given buffer size.
@@ -47,8 +46,7 @@ public class DataAnalyzer {
         this.jawClenchInterval = j;
         this.blinkCount = 0;
         this.jawClenchCount = 0;
-        this.monitoringBlink = false;
-        this.monitoringJawClench = false;
+        this.monitoring = false;
         this.museServer = new MuseServer(this, p);
     }
 
@@ -56,7 +54,8 @@ public class DataAnalyzer {
         System.out.println("Blink: " + blinkCount);
         this.blinkCount++;
 
-        if (!this.monitoringBlink) {
+        if (!this.monitoring) {
+            blinkCount = 1;
             (new BlinkMonitor(this, blinkInterval)).start();
         }
     }
@@ -64,7 +63,8 @@ public class DataAnalyzer {
         System.out.println("Jaw: " + jawClenchCount);
         this.jawClenchCount++;
 
-        if (!this.monitoringJawClench) {
+        if (!this.monitoring) {
+            jawClenchCount = 1;
             (new JawClenchMonitor(this, jawClenchInterval)).start();
         }
     }

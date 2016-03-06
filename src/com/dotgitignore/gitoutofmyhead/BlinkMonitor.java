@@ -36,7 +36,7 @@ public class BlinkMonitor implements Runnable {
     }
     
     public void run() {
-        dataAnalyzer.monitoringBlink = true;
+        dataAnalyzer.monitoring = true;
         try {
             t.sleep(this.waitTime);
         } catch (InterruptedException ex) {
@@ -48,7 +48,7 @@ public class BlinkMonitor implements Runnable {
             dataAnalyzer.controller.singleBlink();
         }
         dataAnalyzer.blinkCount = 0;
-        dataAnalyzer.monitoringBlink = false;
+        dataAnalyzer.monitoring = false;
     }
     
     public void start() {
