@@ -58,11 +58,11 @@ public class AddMenu extends JDialog {
         } catch (IOException ex) {
             Logger.getLogger(AddMenu.class.getName()).log(Level.SEVERE, null, ex);
         }
-            JScrollPane pane = new JScrollPane(panel);
-            pane.setPreferredSize(new Dimension(250, 250));
-            add(pane);
-            pack();
-            setLocation((int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() - getWidth()) / 2, (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() - getHeight()) / 2);
-            setVisible(true);
+        JScrollPane pane = new JScrollPane(panel);
+        pane.setPreferredSize(new Dimension(250, 250));
+        add(pane);
+        pack();
+        setLocation((int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() - getWidth()) / 2, (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() - getHeight()) / 2);
+        setVisible(true);
     }
 }
