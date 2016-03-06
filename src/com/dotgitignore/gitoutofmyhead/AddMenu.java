@@ -105,7 +105,6 @@ public class AddMenu extends JDialog implements Gestures {
             }
         }
         cmd = Arrays.copyOf(cmd, i + 2);
-        System.out.println(Arrays.toString(cmd));
         try {
             Runtime.getRuntime().exec(cmd, new String[]{}, controller.getDirectory());
         } catch (IOException ex) {

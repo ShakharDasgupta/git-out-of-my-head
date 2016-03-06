@@ -19,8 +19,6 @@ package com.dotgitignore.gitoutofmyhead;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BoxLayout;
@@ -64,14 +62,8 @@ public class CommitMenu extends JDialog implements Gestures {
     }
 
     public void singleJawClench() {
-        System.out.println(Arrays.toString(new String[]{"git", "commit", "--author", "\"Shakhar Dasgupta <shakhardasgupta@gmail.com>\"","-m", "\"" + textArea.getText() + "\""}));
         try {
-            Runtime r = Runtime.getRuntime();
-            Process p = r.exec(new String[]{"git", "-c", "user.name=\"Shakhar Dasgupta\"", "-c", "user.email=\"shakhardasgupta@gmail.com\"", "commit", "-m", "\"" + textArea.getText() + "\""}, new String[]{}, controller.getDirectory());
-            Scanner sc = new Scanner(p.getErrorStream());
-            while(sc.hasNextLine()) {
-                System.out.println(sc.nextLine());
-            }
+            Runtime.getRuntime().exec(new String[]{"git", "-c", "user.name=\"Shakhar Dasgupta\"", "-c", "user.email=\"shakhardasgupta@gmail.com\"", "commit", "-m", "\"" + textArea.getText() + "\""}, new String[]{}, controller.getDirectory());
         } catch (IOException ex) {
             Logger.getLogger(CommitMenu.class.getName()).log(Level.SEVERE, null, ex);
         }
