@@ -27,8 +27,10 @@ import javax.swing.JTextArea;
  *
  * @author Shakhar Dasgupta<sdasgupt@oswego.edu>
  */
-public class CommitMenu extends JDialog{
+public class CommitMenu extends JDialog {
+
     JTextArea textArea;
+
     public CommitMenu() {
         setTitle("Git Commit Menu");
         JPanel panel = new JPanel();
@@ -40,5 +42,5 @@ public class CommitMenu extends JDialog{
         setLocation((int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() - getWidth()) / 2, (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() - getHeight()) / 2);
         setVisible(true);
     }
-    
+
 }

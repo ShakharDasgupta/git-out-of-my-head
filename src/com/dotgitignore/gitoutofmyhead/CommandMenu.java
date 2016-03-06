@@ -55,12 +55,12 @@ public class CommandMenu extends JDialog implements Gestures {
         visible = true;
     }
 
-    public void headDown() {
+    public void singleBlink() {
         list.setSelectedIndex((list.getSelectedIndex() + 1) % list.getModel().getSize());
     }
 
-    public void headUp() {
-        list.setSelectedIndex((list.getModel().getSize() + list.getSelectedIndex() - 1) % list.getModel().getSize());
+    public void doubleBlink() {
+        
     }
 
     public void singleJawClench() {

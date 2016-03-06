@@ -20,9 +20,6 @@ package com.dotgitignore.gitoutofmyhead;
  *
  * @author Shakhar Dasgupta<sdasgupt@oswego.edu>
  */
-public interface Gestures {
-    public void singleBlink();
-    public void doubleBlink();
-    public void singleJawClench();
-    public void doubleJawClench();
+public class PushMenu {
+    
 }

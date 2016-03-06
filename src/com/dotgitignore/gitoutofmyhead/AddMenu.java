@@ -25,44 +25,91 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BoxLayout;
+import javax.swing.DefaultListModel;
 import javax.swing.JCheckBox;
 import javax.swing.JDialog;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
 
 /**
  *
  * @author Shakhar Dasgupta<sdasgupt@oswego.edu>
  */
-public class AddMenu extends JDialog {
+public class AddMenu extends JDialog implements Gestures {
 
     private boolean visible;
-    ArrayList<JCheckBox> boxList = new ArrayList<>();
+    ArrayList<JCheckBox> boxList;
+    JList<String> list;
 
     public AddMenu() {
         setTitle("Git Add Menu");
         JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        JCheckBox all = new JCheckBox("All");
+        JPanel checkPanel = new JPanel();
+        JPanel listPanel = new JPanel();
+        checkPanel.setLayout(new BoxLayout(checkPanel, BoxLayout.Y_AXIS));
+        boxList = new ArrayList<>();
+        DefaultListModel<String> model = new DefaultListModel<>();
+        JCheckBox all = new JCheckBox();
         all.setSelected(true);
         boxList.add(all);
-        panel.add(all);
+        checkPanel.add(all);
+        model.addElement("All");
         try {
             BufferedReader br = new BufferedReader(new InputStreamReader(Runtime.getRuntime().exec("ls").getInputStream()));
             String line;
             while ((line = br.readLine()) != null) {
-                JCheckBox box = new JCheckBox(line);
+                JCheckBox box = new JCheckBox();
                 boxList.add(box);
-                panel.add(box);
+                checkPanel.add(box);
+                model.addElement(line);
             }
         } catch (IOException ex) {
             Logger.getLogger(AddMenu.class.getName()).log(Level.SEVERE, null, ex);
         }
+        list = new JList<>(model);
+        list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        list.setSelectedIndex(0);
+        listPanel.add(list);
+        panel.add(checkPanel);
+        panel.add(listPanel);
         JScrollPane pane = new JScrollPane(panel);
         pane.setPreferredSize(new Dimension(250, 250));
         add(pane);
         pack();
         setLocation((int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() - getWidth()) / 2, (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() - getHeight()) / 2);
         setVisible(true);
+    }
+
+    public void singleBlink() {
+        list.setSelectedIndex((list.getSelectedIndex() + 1) % list.getModel().getSize());
+    }
+
+    public void doubleBlink() {
+        JCheckBox box = boxList.get(list.getSelectedIndex());
+        if (box.isSelected()) {
+            box.setSelected(false);
+        } else {
+            box.setSelected(true);
+        }
+    }
+
+    public void singleJawClench() {
+        String[] cmd = new String[boxList.size() + 2];
+        cmd[0] = "git";
+        cmd[1] = "add";
+        for(int i = 0; i < list.getModel().getSize(); i++) {
+            cmd[i+2] = list.getModel().getElementAt(i);
+        }
+        try {
+            Runtime.getRuntime().exec(cmd);
+        } catch (IOException ex) {
+            Logger.getLogger(AddMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void doubleJawClench() {
+        
     }
 }
