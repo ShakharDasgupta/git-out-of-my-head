@@ -39,9 +39,8 @@ import javax.swing.ListSelectionModel;
  */
 public class AddMenu extends JDialog implements Gestures {
 
-    private boolean visible;
-    ArrayList<JCheckBox> boxList;
-    JList<String> list;
+    private ArrayList<JCheckBox> boxList;
+    private JList<String> list;
 
     public AddMenu() {
         setTitle("Git Add Menu");

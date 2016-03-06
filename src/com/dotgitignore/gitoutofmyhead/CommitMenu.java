@@ -18,6 +18,9 @@ package com.dotgitignore.gitoutofmyhead;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -29,7 +32,7 @@ import javax.swing.JTextArea;
  */
 public class CommitMenu extends JDialog {
 
-    JTextArea textArea;
+    private JTextArea textArea;
 
     public CommitMenu() {
         setTitle("Git Commit Menu");
@@ -42,5 +45,22 @@ public class CommitMenu extends JDialog {
         setLocation((int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() - getWidth()) / 2, (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() - getHeight()) / 2);
         setVisible(true);
     }
+    
+    public void singleBlink() {
+        
+    }
+    
+    public void doubleBlink() {
+        
+    }
+    
+    public void singleJawClench() {
+        try {
+            Runtime.getRuntime().exec(new String[]{"git", "commit", "-m", textArea.getText()});
+        } catch (IOException ex) {
+            Logger.getLogger(CommitMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
 
 }
