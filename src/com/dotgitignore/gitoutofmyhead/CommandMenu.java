@@ -21,6 +21,7 @@ import java.awt.Toolkit;
 import javax.swing.DefaultListModel;
 import javax.swing.JDialog;
 import javax.swing.JList;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
@@ -35,17 +36,19 @@ public class CommandMenu extends JDialog implements Gestures {
 
     public CommandMenu() {
         setTitle("Git Command Menu");
+        JPanel panel = new JPanel();
         DefaultListModel<String> model = new DefaultListModel<>();
         model.addElement("Add");
         model.addElement("Commit");
-        model.addElement("Checkout");
+        model.addElement("Push");
         list = new JList<>(model);
         list.setFixedCellHeight(50);
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         list.setSelectedIndex(0);
         JScrollPane pane = new JScrollPane(list);
         pane.setPreferredSize(new Dimension(250, 250));
-        add(pane);
+        panel.add(pane);
+        add(panel);
         pack();
         setLocation((int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() - getWidth()) / 2, (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() - getHeight()) / 2);
         setVisible(true);
