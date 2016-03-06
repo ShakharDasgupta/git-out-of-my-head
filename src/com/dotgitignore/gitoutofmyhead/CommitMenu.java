@@ -21,7 +21,9 @@ import java.awt.Toolkit;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.BoxLayout;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -30,17 +32,22 @@ import javax.swing.JTextArea;
  *
  * @author Shakhar Dasgupta<sdasgupt@oswego.edu>
  */
-public class CommitMenu extends JDialog {
+public class CommitMenu extends JDialog implements Gestures {
 
     private JTextArea textArea;
+    private Controller controller;
 
-    public CommitMenu() {
+    public CommitMenu(Controller controller) {
+        this.controller = controller;
         setTitle("Git Commit Menu");
         JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.add(new JLabel("Commit Message: "));
         textArea = new JTextArea();
         JScrollPane pane = new JScrollPane(textArea);
         pane.setPreferredSize(new Dimension(250, 250));
-        add(pane);
+        panel.add(pane);
+        add(panel);
         pack();
         setLocation((int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() - getWidth()) / 2, (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() - getHeight()) / 2);
         setVisible(true);
@@ -60,7 +67,12 @@ public class CommitMenu extends JDialog {
         } catch (IOException ex) {
             Logger.getLogger(CommitMenu.class.getName()).log(Level.SEVERE, null, ex);
         }
+        setVisible(false);
+        controller.setWindow(null);
     }
     
-
+    public void doubleJawClench() {
+        setVisible(false);
+        controller.setWindow(null);
+    }
 }

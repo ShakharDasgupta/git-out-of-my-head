@@ -18,7 +18,15 @@ package com.dotgitignore.gitoutofmyhead;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
+import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -29,19 +37,25 @@ import javax.swing.ListSelectionModel;
  *
  * @author Shakhar Dasgupta<sdasgupt@oswego.edu>
  */
-public class CommandMenu extends JDialog implements Gestures {
+public class RemoteMenu extends JDialog implements Gestures{
+    
+    private Controller controller;
+    private JList<String> list;
 
-    private final Controller controller;
-    private final JList<String> list;
-
-    public CommandMenu(Controller controller) {
+    public RemoteMenu(Controller controller) {
         this.controller = controller;
-        setTitle("Git Command Menu");
+        setTitle("Git Remote Menu");
         JPanel panel = new JPanel();
         DefaultListModel<String> model = new DefaultListModel<>();
-        model.addElement("Add");
-        model.addElement("Commit");
-        model.addElement("Push");
+        try {
+            BufferedReader br = new BufferedReader(new InputStreamReader(Runtime.getRuntime().exec(new String[]{"git", "remote"}).getInputStream()));
+            String line;
+            while ((line = br.readLine()) != null) {
+                model.addElement(line);
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(AddMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
         list = new JList<>(model);
         list.setFixedCellHeight(50);
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -53,6 +67,7 @@ public class CommandMenu extends JDialog implements Gestures {
         pack();
         setLocation((int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() - getWidth()) / 2, (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() - getHeight()) / 2);
         setVisible(true);
+        
     }
 
     public void singleBlink() {
@@ -65,17 +80,7 @@ public class CommandMenu extends JDialog implements Gestures {
 
     public void singleJawClench() {
         setVisible(false);
-        switch(list.getSelectedIndex()) {
-            case 0:
-                controller.setWindow(new AddMenu(controller));
-                break;
-            case 1:
-                controller.setWindow(new CommitMenu(controller));
-                break;
-            case 2:
-                controller.setWindow(new RemoteMenu(controller));
-                break;
-        }
+        controller.setWindow(new BranchMenu(controller, list.getSelectedValue()));
     }
 
     public void doubleJawClench() {

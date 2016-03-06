@@ -39,10 +39,12 @@ import javax.swing.ListSelectionModel;
  */
 public class AddMenu extends JDialog implements Gestures {
 
+    private Controller controller;
     private ArrayList<JCheckBox> boxList;
     private JList<String> list;
 
-    public AddMenu() {
+    public AddMenu(Controller controller) {
+        this.controller = controller;
         setTitle("Git Add Menu");
         JPanel panel = new JPanel();
         JPanel checkPanel = new JPanel();
@@ -56,7 +58,7 @@ public class AddMenu extends JDialog implements Gestures {
         checkPanel.add(all);
         model.addElement("All");
         try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(Runtime.getRuntime().exec("ls").getInputStream()));
+            BufferedReader br = new BufferedReader(new InputStreamReader(Runtime.getRuntime().exec(new String[]{"git", "status", "-s"}).getInputStream()));
             String line;
             while ((line = br.readLine()) != null) {
                 JCheckBox box = new JCheckBox();
@@ -68,6 +70,7 @@ public class AddMenu extends JDialog implements Gestures {
             Logger.getLogger(AddMenu.class.getName()).log(Level.SEVERE, null, ex);
         }
         list = new JList<>(model);
+        list.setFixedCellHeight(20);
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         list.setSelectedIndex(0);
         listPanel.add(list);
@@ -98,17 +101,20 @@ public class AddMenu extends JDialog implements Gestures {
         String[] cmd = new String[boxList.size() + 2];
         cmd[0] = "git";
         cmd[1] = "add";
-        for(int i = 0; i < list.getModel().getSize(); i++) {
-            cmd[i+2] = list.getModel().getElementAt(i);
+        for (int i = 0; i < list.getModel().getSize(); i++) {
+            cmd[i + 2] = list.getModel().getElementAt(i);
         }
         try {
             Runtime.getRuntime().exec(cmd);
         } catch (IOException ex) {
             Logger.getLogger(AddMenu.class.getName()).log(Level.SEVERE, null, ex);
         }
+        setVisible(false);
+        controller.setWindow(null);
     }
 
     public void doubleJawClench() {
-        
+        setVisible(false);
+        controller.setWindow(null);
     }
 }

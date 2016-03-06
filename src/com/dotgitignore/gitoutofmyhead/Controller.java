@@ -32,8 +32,12 @@ public class Controller implements Gestures {
      * @param l Wait time for double actions.
      * @param p The port number of the Controller.
      */
-    public Controller(int l, int p) {
-        this.dataAnalyzer = new DataAnalyzer(this, l, p);
+    public Controller(int blinkInterval, int jawClenchInterval, int port) {
+        this.dataAnalyzer = new DataAnalyzer(this, blinkInterval, jawClenchInterval, port);
+    }
+    
+    public void setWindow(Gestures window) {
+        this.window = window;
     }
 
     /**
@@ -80,7 +84,7 @@ public class Controller implements Gestures {
     public void doubleJawClench() {
         System.out.println("DOUBLE CLENCH");
         if (this.window == null) {
-            this.window = new CommandMenu();
+            this.window = new CommandMenu(this);
         } else {
             this.window.doubleJawClench();
         }

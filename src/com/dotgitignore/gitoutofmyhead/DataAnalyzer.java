@@ -26,7 +26,8 @@ public class DataAnalyzer {
 
     final Controller controller;
     private final MuseServer museServer;
-    private final int waitTime;
+    private final int blinkInterval;
+    private final int jawClenchInterval;
     int blinkCount;
     int jawClenchCount;
 
@@ -40,9 +41,10 @@ public class DataAnalyzer {
      * @param l The double action wait time of the DataAnalyzer.
      * @param p The port of the MuseServer.
      */
-    public DataAnalyzer(Controller c, int l, int p) {
+    public DataAnalyzer(Controller c, int l, int j, int p) {
         this.controller = c;
-        this.waitTime = l;
+        this.blinkInterval = l;
+        this.jawClenchInterval = j;
         this.blinkCount = 0;
         this.jawClenchCount = 0;
         this.monitoringBlink = false;
@@ -55,7 +57,7 @@ public class DataAnalyzer {
         this.blinkCount++;
 
         if (!this.monitoringBlink) {
-            (new BlinkMonitor(this, waitTime)).start();
+            (new BlinkMonitor(this, blinkInterval)).start();
         }
     }
     public void addJawClench() throws InterruptedException {
@@ -63,7 +65,7 @@ public class DataAnalyzer {
         this.jawClenchCount++;
 
         if (!this.monitoringJawClench) {
-            (new JawClenchMonitor(this, waitTime)).start();
+            (new JawClenchMonitor(this, jawClenchInterval)).start();
         }
     }
 }

@@ -16,28 +16,12 @@
  */
 package com.dotgitignore.gitoutofmyhead;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
-
 /**
  *
  * @author Shakhar Dasgupta<sdasgupt@oswego.edu>
  */
 public class Main {
     public static void main(String[] args) {
-//        try {
-//            UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
-//        } catch (ClassNotFoundException ex) {
-//            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-//        } catch (UnsupportedLookAndFeelException ex) {
-//            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-        Controller controller = new Controller(1000, 5000);
+        Controller controller = new Controller(500, 1500, 5000);
     }
 }
