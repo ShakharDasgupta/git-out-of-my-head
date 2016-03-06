@@ -16,12 +16,26 @@
  */
 package com.dotgitignore.gitoutofmyhead;
 
+import java.io.File;
+import javax.swing.JFileChooser;
+
 /**
  *
  * @author Shakhar Dasgupta<sdasgupt@oswego.edu>
  */
 public class Main {
     public static void main(String[] args) {
-        Controller controller = new Controller(500, 1500, 5000);
+        JFileChooser fc = new JFileChooser();
+        fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        int returnValue = fc.showOpenDialog(null);
+        File dir = null;
+        if(returnValue == JFileChooser.APPROVE_OPTION) {
+            dir = fc.getSelectedFile();
+            System.out.println(dir);
+        }
+        else {
+            return;
+        }
+        Controller controller = new Controller(500, 1500, 5000, dir);
     }
 }

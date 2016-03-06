@@ -21,7 +21,10 @@ import java.awt.Toolkit;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BoxLayout;
@@ -50,10 +53,10 @@ public class BranchMenu extends JDialog implements Gestures {
         JPanel panel = new JPanel();
         DefaultListModel<String> model = new DefaultListModel<>();
         try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(Runtime.getRuntime().exec(new String[]{"git", "branch"}).getInputStream()));
+            BufferedReader br = new BufferedReader(new InputStreamReader(Runtime.getRuntime().exec(new String[]{"git", "branch"}, new String[]{}, controller.getDirectory()).getInputStream()));
             String line;
             while ((line = br.readLine()) != null) {
-                model.addElement(line);
+                model.addElement(line.substring(2));
             }
         } catch (IOException ex) {
             Logger.getLogger(AddMenu.class.getName()).log(Level.SEVERE, null, ex);
@@ -80,7 +83,7 @@ public class BranchMenu extends JDialog implements Gestures {
     }
     public void singleJawClench() {
         try {
-            Runtime.getRuntime().exec(new String[]{"git", "push", remoteListSelected, list.getSelectedValue()});
+            Runtime.getRuntime().exec(new String[]{"git", "push", remoteListSelected, list.getSelectedValue()}, new String[]{}, controller.getDirectory());
         } catch (IOException ex) {
             Logger.getLogger(BranchMenu.class.getName()).log(Level.SEVERE, null, ex);
         }

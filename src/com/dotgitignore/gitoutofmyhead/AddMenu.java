@@ -22,6 +22,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BoxLayout;
@@ -52,19 +53,14 @@ public class AddMenu extends JDialog implements Gestures {
         checkPanel.setLayout(new BoxLayout(checkPanel, BoxLayout.Y_AXIS));
         boxList = new ArrayList<>();
         DefaultListModel<String> model = new DefaultListModel<>();
-        JCheckBox all = new JCheckBox();
-        all.setSelected(true);
-        boxList.add(all);
-        checkPanel.add(all);
-        model.addElement("All");
         try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(Runtime.getRuntime().exec(new String[]{"git", "status", "-s"}).getInputStream()));
+            BufferedReader br = new BufferedReader(new InputStreamReader(Runtime.getRuntime().exec(new String[]{"git", "status", "-s"}, new String[]{}, controller.getDirectory()).getInputStream()));
             String line;
             while ((line = br.readLine()) != null) {
                 JCheckBox box = new JCheckBox();
                 boxList.add(box);
                 checkPanel.add(box);
-                model.addElement(line);
+                model.addElement(line.substring(3));
             }
         } catch (IOException ex) {
             Logger.getLogger(AddMenu.class.getName()).log(Level.SEVERE, null, ex);
@@ -98,14 +94,20 @@ public class AddMenu extends JDialog implements Gestures {
     }
 
     public void singleJawClench() {
-        String[] cmd = new String[boxList.size() + 2];
+
+        String[] cmd = new String[list.getModel().getSize() + 2];
         cmd[0] = "git";
         cmd[1] = "add";
-        for (int i = 0; i < list.getModel().getSize(); i++) {
-            cmd[i + 2] = list.getModel().getElementAt(i);
+        int i = 0;
+        for (String s : list.getSelectedValuesList()) {
+            if (boxList.get(i).isSelected()) {
+                cmd[(i++) + 2] = s;
+            }
         }
+        cmd = Arrays.copyOf(cmd, i + 2);
+        System.out.println(Arrays.toString(cmd));
         try {
-            Runtime.getRuntime().exec(cmd);
+            Runtime.getRuntime().exec(cmd, new String[]{}, controller.getDirectory());
         } catch (IOException ex) {
             Logger.getLogger(AddMenu.class.getName()).log(Level.SEVERE, null, ex);
         }

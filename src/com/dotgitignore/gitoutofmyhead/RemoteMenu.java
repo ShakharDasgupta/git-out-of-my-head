@@ -48,7 +48,7 @@ public class RemoteMenu extends JDialog implements Gestures{
         JPanel panel = new JPanel();
         DefaultListModel<String> model = new DefaultListModel<>();
         try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(Runtime.getRuntime().exec(new String[]{"git", "remote"}).getInputStream()));
+            BufferedReader br = new BufferedReader(new InputStreamReader(Runtime.getRuntime().exec(new String[]{"git", "remote"}, new String[]{}, controller.getDirectory()).getInputStream()));
             String line;
             while ((line = br.readLine()) != null) {
                 model.addElement(line);

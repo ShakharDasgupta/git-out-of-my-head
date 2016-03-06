@@ -19,6 +19,8 @@ package com.dotgitignore.gitoutofmyhead;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BoxLayout;
@@ -52,25 +54,26 @@ public class CommitMenu extends JDialog implements Gestures {
         setLocation((int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() - getWidth()) / 2, (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() - getHeight()) / 2);
         setVisible(true);
     }
-    
+
     public void singleBlink() {
-        
+
     }
-    
+
     public void doubleBlink() {
-        
+
     }
-    
+
     public void singleJawClench() {
+        System.out.println(Arrays.toString(new String[]{"git", "commit", "-m", "\"" + textArea.getText() + "\""}));
         try {
-            Runtime.getRuntime().exec(new String[]{"git", "commit", "-m", textArea.getText()});
+            Runtime.getRuntime().exec(new String[]{"git", "commit", "-F", "\"" + textArea.getText() + "\""}, new String[]{}, controller.getDirectory());
         } catch (IOException ex) {
             Logger.getLogger(CommitMenu.class.getName()).log(Level.SEVERE, null, ex);
         }
         setVisible(false);
         controller.setWindow(null);
     }
-    
+
     public void doubleJawClench() {
         setVisible(false);
         controller.setWindow(null);

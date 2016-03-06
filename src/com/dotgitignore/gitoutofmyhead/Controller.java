@@ -16,6 +16,8 @@
  */
 package com.dotgitignore.gitoutofmyhead;
 
+import java.io.File;
+
 /**
  *
  * @author Christopher Wells <cwellsny@nycap.rr.com>
@@ -24,6 +26,7 @@ public class Controller implements Gestures {
 
     private final DataAnalyzer dataAnalyzer;
     private Gestures window;
+    private File directory;
 
     /**
      * Initializes a <code>Controller</code> with the double action wait time
@@ -32,12 +35,17 @@ public class Controller implements Gestures {
      * @param l Wait time for double actions.
      * @param p The port number of the Controller.
      */
-    public Controller(int blinkInterval, int jawClenchInterval, int port) {
+    public Controller(int blinkInterval, int jawClenchInterval, int port, File dir) {
+        directory = dir;
         this.dataAnalyzer = new DataAnalyzer(this, blinkInterval, jawClenchInterval, port);
     }
     
     public void setWindow(Gestures window) {
         this.window = window;
+    }
+    
+    public File getDirectory() {
+        return directory;
     }
 
     /**
