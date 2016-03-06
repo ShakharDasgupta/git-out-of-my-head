@@ -25,44 +25,56 @@ import javax.swing.JDialog;
 public class Controller implements Gestures {
 
     private final DataAnalyzer dataAnalyzer;
-    private JDialog window;
+    private Gestures window;
 
     /**
-     * Initializes a <code>Controller</code> with the double action wait time and port
-     * number.
+     * Initializes a <code>Controller</code> with the double action wait time
+     * and port number.
      *
      * @param l Wait time for double actions.
      * @param p The port number of the Controller.
      */
     public Controller(double l, int p) {
-        this.dataAnalyzer = new DataAnalyzer(this, b, p);
+        this.dataAnalyzer = new DataAnalyzer(this, l, p);
     }
 
+    /**
+     * Runs when a single blink is registered and delivers the signal to the
+     * window.
+     */
     @Override
     public void singleBlink() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    /**
+     * Runs when a double blink is registered and delivers the signal to the
+     * window.
+     */
     @Override
     public void doubleBlink() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    /**
+     * Runs when a single jaw clench is registered and delivers the signal to the
+     * window.
+     */
     @Override
     public void singleJawClench() {
-        if (this.window instanceof CommandMenu) {
-            ((CommandMenu) this.window).singleJawClench();
-        } else if (this.window instanceof AddMenu) {
-            ((AddMenu) this.window).singleJawClench();
-        }
+        this.window.singleJawClench();
     }
 
+    /**
+     * Runs when a double jaw clench is registered and delivers the signal to the
+     * window.
+     */
     @Override
     public void doubleJawClench() {
         if (this.window == null) {
             this.window = new CommandMenu();
         } else {
-            ((Gestures) this.window).doubleJawClench();
+            this.window.doubleJawClench();
         }
     }
 
