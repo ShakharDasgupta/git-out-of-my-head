@@ -38,6 +38,6 @@ public class Main {
         } catch (UnsupportedLookAndFeelException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
-        new CommandMenu();
+        new CommitMenu();
     }
 }
