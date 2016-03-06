@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Christopher Wells <cwellsny@nycap.rr.com>
+ * Copyright (C) 2016 Shakhar Dasgupta<sdasgupt@oswego.edu>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,19 +16,28 @@
  */
 package com.dotgitignore.gitoutofmyhead;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+
 /**
  *
- * @author Christopher Wells <cwellsny@nycap.rr.com>
+ * @author Shakhar Dasgupta<sdasgupt@oswego.edu>
  */
 public class Main {
-
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
-        int port = 5000;
-        int bufferSize = 5;
-        DataAnalyzer da = new DataAnalyzer(bufferSize, port);
+        try {
+            UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnsupportedLookAndFeelException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        new CommandMenu();
     }
-
 }

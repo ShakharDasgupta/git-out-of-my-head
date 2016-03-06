@@ -16,15 +16,64 @@
  */
 package com.dotgitignore.gitoutofmyhead;
 
-import javax.swing.JFrame;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import javax.swing.DefaultListModel;
+import javax.swing.JDialog;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
 
 /**
  *
  * @author Shakhar Dasgupta<sdasgupt@oswego.edu>
  */
-public class CommandMenu extends JFrame {
-    
+public class CommandMenu extends JDialog implements Gestures {
+
+    private final JList<String> list;
+    private boolean visible;
+
     public CommandMenu() {
         setTitle("Git Command Menu");
+        JPanel panel = new JPanel();
+        DefaultListModel<String> model = new DefaultListModel<>();
+        model.addElement("Add");
+        model.addElement("Commit");
+        model.addElement("Push");
+        list = new JList<>(model);
+        list.setFixedCellHeight(50);
+        list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        list.setSelectedIndex(0);
+        JScrollPane pane = new JScrollPane(list);
+        pane.setPreferredSize(new Dimension(250, 250));
+        panel.add(pane);
+        add(panel);
+        pack();
+        setLocation((int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() - getWidth()) / 2, (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() - getHeight()) / 2);
+        setVisible(true);
+        visible = true;
+    }
+
+    public void headDown() {
+        list.setSelectedIndex((list.getSelectedIndex() + 1) % list.getModel().getSize());
+    }
+
+    public void headUp() {
+        list.setSelectedIndex((list.getModel().getSize() + list.getSelectedIndex() - 1) % list.getModel().getSize());
+    }
+
+    public void singleJawClench() {
+        
+    }
+
+    public void doubleJawClench() {
+        if (visible) {
+            visible = false;
+            setVisible(false);
+        } else {
+            visible = true;
+            setVisible(true);
+        }
     }
 }
