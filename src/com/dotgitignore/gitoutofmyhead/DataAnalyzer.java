@@ -24,6 +24,7 @@ package com.dotgitignore.gitoutofmyhead;
  */
 public class DataAnalyzer {
 
+    private final Controller controller;
     private final MuseServer museServer;
     private final Double[][] dataBuffer;
     private final int bufferSize;
@@ -40,7 +41,8 @@ public class DataAnalyzer {
      * @param b The buffer size of the DataAnalyzer.
      * @param p The port of the MuseServer.
      */
-    public DataAnalyzer(int b, int p) {
+    public DataAnalyzer(Controller c, int b, int p) {
+        this.controller = c;
         this.baseThreshold = 10;
         this.highThreshold = 20;
         this.lowThreshold = 5;
@@ -86,8 +88,14 @@ public class DataAnalyzer {
         this.emptyBuffer();
 
         // Run the command
-        // HERE RUN THE COMMAND
-        System.out.println(currentGesture);
+        switch(currentGesture) {
+            case "Single Jaw Clench":
+                this.controller.singleJawClench();
+                break;
+            case "Double Jaw Clench":
+                this.controller.doubleJawClench();
+                break;
+        }
     }
 
     /**
