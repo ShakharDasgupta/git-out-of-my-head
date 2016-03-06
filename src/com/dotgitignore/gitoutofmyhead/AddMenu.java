@@ -98,15 +98,14 @@ public class AddMenu extends JDialog implements Gestures {
         String[] cmd = new String[list.getModel().getSize() + 2];
         cmd[0] = "git";
         cmd[1] = "add";
-        int i = 0;
-        for (String s : list.getSelectedValuesList()) {
+        int c = 2;
+        for (int i = 0; i < list.getModel().getSize(); i++) {
             if (boxList.get(i).isSelected()) {
-                cmd[(i++) + 2] = s;
+                cmd[c++] = list.getModel().getElementAt(i);
             }
         }
-        cmd = Arrays.copyOf(cmd, i + 2);
         try {
-            Runtime.getRuntime().exec(cmd, new String[]{}, controller.getDirectory());
+            Runtime.getRuntime().exec(Arrays.copyOf(cmd, c), new String[]{}, controller.getDirectory());
         } catch (IOException ex) {
             Logger.getLogger(AddMenu.class.getName()).log(Level.SEVERE, null, ex);
         }
