@@ -69,7 +69,7 @@ public class DataAnalyzer {
             }
         }
 
-        if (filled == this.streams) {
+        if (filled > 0) {
             this.analyzeData();
         }
     }
@@ -116,34 +116,42 @@ public class DataAnalyzer {
         double acc0Avg = 0;
         double acc0Max = 0;
         double acc0Min = 99999.9;
-        for (double measure : this.dataBuffer[0]) {
-            acc0Avg += measure;
+        int measureNum = 0;
+        for (Double measure : this.dataBuffer[0]) {
+            if (measure != null) {
+                measureNum++;
+                acc0Avg += measure;
 
-            if (measure > acc0Max) {
-                acc0Max = measure;
-            }
+                if (measure > acc0Max) {
+                    acc0Max = measure;
+                }
 
-            if (measure < acc0Min) {
-                acc0Min = measure;
+                if (measure < acc0Min) {
+                    acc0Min = measure;
+                }
             }
         }
-        acc0Avg /= this.bufferSize;
+        acc0Avg /= measureNum;
 
         double acc2Avg = 0;
         double acc2Max = 0;
         double acc2Min = 999999.9;
-        for (double measure : this.dataBuffer[2]) {
-            acc2Avg += measure;
+        measureNum = 0;
+        for (Double measure : this.dataBuffer[2]) {
+            if (measure != null) {
+                measureNum++;
+                acc2Avg += measure;
 
-            if (measure > acc2Max) {
-                acc2Max = measure;
-            }
+                if (measure > acc2Max) {
+                    acc2Max = measure;
+                }
 
-            if (measure < acc2Min) {
-                acc2Min = measure;
+                if (measure < acc2Min) {
+                    acc2Min = measure;
+                }
             }
         }
-        acc2Avg /= this.bufferSize;
+        acc2Avg /= measureNum;
 
         // Check for shakeHorizontal
         if (acc2Avg < this.highThreshold && acc2Avg > this.lowThreshold

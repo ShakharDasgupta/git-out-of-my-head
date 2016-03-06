@@ -49,8 +49,9 @@ public class MuseServer {
     public void oscEvent(OscMessage msg) {
         if (msg.checkAddress("/muse/elements/jaw_clench")) {
             this.dataAnalyzer.addData(3, (double) msg.get(0).intValue());
-        } else if (msg.checkAddress("/muse/elements/acc")) {
-            for (int i = 0; i <= 3; i++) {
+        }
+        if (msg.checkAddress("/muse/elements/acc")) {
+            for (int i = 0; i < 3; i++) {
                 this.dataAnalyzer.addData(i, msg.get(i).doubleValue());
             }
         }
