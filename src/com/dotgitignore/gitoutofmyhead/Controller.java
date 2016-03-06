@@ -42,7 +42,7 @@ public class Controller implements Gestures {
      */
     @Override
     public void singleBlink() {
-        System.out.println("SINGLE");
+        System.out.println("SINGLE BLINK");
         if (this.window != null) {
             this.window.singleBlink();
         }
@@ -54,7 +54,7 @@ public class Controller implements Gestures {
      */
     @Override
     public void doubleBlink() {
-        System.out.println("DOUBLE");
+        System.out.println("DOUBLE BLINK");
         if (this.window != null) {
             this.window.doubleBlink();
         }
@@ -66,6 +66,7 @@ public class Controller implements Gestures {
      */
     @Override
     public void singleJawClench() {
+        System.out.println("SINGLE CLENCH");
         if (this.window != null) {
             this.window.singleJawClench();
         }
@@ -77,6 +78,7 @@ public class Controller implements Gestures {
      */
     @Override
     public void doubleJawClench() {
+        System.out.println("DOUBLE CLENCH");
         if (this.window == null) {
             this.window = new CommandMenu();
         } else {
