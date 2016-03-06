@@ -64,9 +64,14 @@ public class CommitMenu extends JDialog implements Gestures {
     }
 
     public void singleJawClench() {
-        System.out.println(Arrays.toString(new String[]{"git", "commit", "-m", "\"" + textArea.getText() + "\""}));
+        System.out.println(Arrays.toString(new String[]{"git", "commit", "--author", "\"Shakhar Dasgupta <shakhardasgupta@gmail.com>\"","-m", "\"" + textArea.getText() + "\""}));
         try {
-            Runtime.getRuntime().exec(new String[]{"git", "commit", "-F", "\"" + textArea.getText() + "\""}, new String[]{}, controller.getDirectory());
+            Runtime r = Runtime.getRuntime();
+            Process p = r.exec(new String[]{"git", "-c", "user.name=\"Shakhar Dasgupta\"", "-c", "user.email=\"shakhardasgupta@gmail.com\"", "commit", "-m", "\"" + textArea.getText() + "\""}, new String[]{}, controller.getDirectory());
+            Scanner sc = new Scanner(p.getErrorStream());
+            while(sc.hasNextLine()) {
+                System.out.println(sc.nextLine());
+            }
         } catch (IOException ex) {
             Logger.getLogger(CommitMenu.class.getName()).log(Level.SEVERE, null, ex);
         }

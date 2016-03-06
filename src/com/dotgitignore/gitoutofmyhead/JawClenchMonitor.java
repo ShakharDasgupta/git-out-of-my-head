@@ -41,7 +41,7 @@ public class JawClenchMonitor implements Runnable {
         } catch (InterruptedException ex) {
             Logger.getLogger(JawClenchMonitor.class.getName()).log(Level.SEVERE, null, ex);
         }
-        if (dataAnalyzer.jawClenchCount > 7) {
+        if (dataAnalyzer.jawClenchCount > 5) {
             dataAnalyzer.controller.doubleJawClench();
         } else {
             dataAnalyzer.controller.singleJawClench();
