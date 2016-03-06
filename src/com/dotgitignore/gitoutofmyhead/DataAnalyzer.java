@@ -63,19 +63,7 @@ public class DataAnalyzer {
         this.jawClenchCount++;
 
         if (!this.monitoringJawClench) {
-            this.monitorJawClench();
+            (new JawClenchMonitor(this, waitTime)).start();
         }
-    }
-
-    public void monitorJawClench() throws InterruptedException {
-        this.monitoringJawClench = true;
-        Thread.sleep((int) this.waitTime);
-        if (this.jawClenchCount > 1) {
-            this.controller.doubleJawClench();
-        } else {
-            this.controller.singleJawClench();
-        }
-        this.jawClenchCount = 0;
-        this.monitoringJawClench = false;
     }
 }
