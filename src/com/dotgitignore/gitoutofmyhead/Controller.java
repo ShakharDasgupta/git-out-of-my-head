@@ -28,23 +28,23 @@ public class Controller implements Gestures {
     private JDialog window;
 
     /**
-     * Initializes a <code>Controller</code> with the given buffer size and port
+     * Initializes a <code>Controller</code> with the double action wait time and port
      * number.
      *
-     * @param b The buffer size of the Controller.
+     * @param l Wait time for double actions.
      * @param p The port number of the Controller.
      */
-    public Controller(int b, int p) {
+    public Controller(double l, int p) {
         this.dataAnalyzer = new DataAnalyzer(this, b, p);
     }
 
     @Override
-    public void headDown() {
+    public void singleBlink() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void headUp() {
+    public void doubleBlink() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

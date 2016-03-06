@@ -46,12 +46,14 @@ public class MuseServer {
      *
      * @param msg The data given by the Muse.
      */
-    public void oscEvent(OscMessage msg) {
+    public void oscEvent(OscMessage msg) throws InterruptedException {
         if (msg.checkAddress("/muse/elements/jaw_clench")) {
-            this.dataAnalyzer.addData(3, (double) msg.get(0).intValue());
-        } else if (msg.checkAddress("/muse/elements/acc")) {
-            for (int i = 0; i <= 3; i++) {
-                this.dataAnalyzer.addData(i, msg.get(i).doubleValue());
+            if (msg.get(0).intValue() == 1) {
+                this.dataAnalyzer.addJawClench();
+            }
+        } else if (msg.checkAddress("/muse/elements/blink")) {
+            if (msg.get(0).intValue() == 1) {
+                this.dataAnalyzer.addBlink();
             }
         }
     }
