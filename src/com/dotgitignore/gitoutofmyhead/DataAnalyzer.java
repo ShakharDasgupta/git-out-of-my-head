@@ -24,14 +24,14 @@ package com.dotgitignore.gitoutofmyhead;
  */
 public class DataAnalyzer {
 
-    private final Controller controller;
+    final Controller controller;
     private final MuseServer museServer;
-    private final double waitTime;
-    private int blinkCount;
-    private int jawClenchCount;
+    private final int waitTime;
+    int blinkCount;
+    int jawClenchCount;
 
-    private boolean monitoringBlink;
-    private boolean monitoringJawClench;
+    boolean monitoringBlink;
+    boolean monitoringJawClench;
 
     /**
      * Initializes a <code>DataAnalyzer</code> with the given buffer size.
@@ -40,7 +40,7 @@ public class DataAnalyzer {
      * @param l The double action wait time of the DataAnalyzer.
      * @param p The port of the MuseServer.
      */
-    public DataAnalyzer(Controller c, double l, int p) {
+    public DataAnalyzer(Controller c, int l, int p) {
         this.controller = c;
         this.waitTime = l;
         this.blinkCount = 0;
@@ -51,23 +51,15 @@ public class DataAnalyzer {
     }
 
     public void addBlink() throws InterruptedException {
+        System.out.println("Blink: " + blinkCount);
         this.blinkCount++;
 
         if (!this.monitoringBlink) {
-            this.monitorBlink();
+            (new BlinkMonitor(this, waitTime)).start();
         }
     }
-
-    public void monitorBlink() throws InterruptedException {
-        Thread.sleep((int) this.waitTime);
-        if (this.blinkCount > 1) {
-            this.controller.doubleBlink();
-        } else {
-            this.controller.singleBlink();
-        }
-    }
-
     public void addJawClench() throws InterruptedException {
+        System.out.println("Jaw: " + jawClenchCount);
         this.jawClenchCount++;
 
         if (!this.monitoringJawClench) {
@@ -76,11 +68,14 @@ public class DataAnalyzer {
     }
 
     public void monitorJawClench() throws InterruptedException {
+        this.monitoringJawClench = true;
         Thread.sleep((int) this.waitTime);
         if (this.jawClenchCount > 1) {
             this.controller.doubleJawClench();
         } else {
             this.controller.singleJawClench();
         }
+        this.jawClenchCount = 0;
+        this.monitoringJawClench = false;
     }
 }

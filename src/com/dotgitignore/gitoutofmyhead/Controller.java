@@ -16,8 +16,6 @@
  */
 package com.dotgitignore.gitoutofmyhead;
 
-import javax.swing.JDialog;
-
 /**
  *
  * @author Christopher Wells <cwellsny@nycap.rr.com>
@@ -34,7 +32,7 @@ public class Controller implements Gestures {
      * @param l Wait time for double actions.
      * @param p The port number of the Controller.
      */
-    public Controller(double l, int p) {
+    public Controller(int l, int p) {
         this.dataAnalyzer = new DataAnalyzer(this, l, p);
     }
 
@@ -44,7 +42,10 @@ public class Controller implements Gestures {
      */
     @Override
     public void singleBlink() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.out.println("SINGLE");
+        if (this.window != null) {
+            this.window.singleBlink();
+        }
     }
 
     /**
@@ -53,21 +54,26 @@ public class Controller implements Gestures {
      */
     @Override
     public void doubleBlink() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.out.println("DOUBLE");
+        if (this.window != null) {
+            this.window.doubleBlink();
+        }
     }
 
     /**
-     * Runs when a single jaw clench is registered and delivers the signal to the
-     * window.
+     * Runs when a single jaw clench is registered and delivers the signal to
+     * the window.
      */
     @Override
     public void singleJawClench() {
-        this.window.singleJawClench();
+        if (this.window != null) {
+            this.window.singleJawClench();
+        }
     }
 
     /**
-     * Runs when a double jaw clench is registered and delivers the signal to the
-     * window.
+     * Runs when a double jaw clench is registered and delivers the signal to
+     * the window.
      */
     @Override
     public void doubleJawClench() {
