@@ -1,6 +1,8 @@
 # git-out-of-my-head
 A program which allows one to control Git using a Muse headband.
 
+![A screenshot of Git Out Of My Head running in Netbeans.](screenshot.png)
+
 ## Development
 The following sections include information on the development of Git Out Of My Head.
 
